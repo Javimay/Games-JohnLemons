@@ -4,6 +4,7 @@ using UnityTechnologies.Scripts;
 public class GhostInBath : MonoBehaviour, IInteractable {
     private UIManager uiManager;
     private Dialogues dialogues = new();
+
     void Start() {
         uiManager = UIManager.Instance;
     }

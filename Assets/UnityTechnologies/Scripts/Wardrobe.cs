@@ -6,7 +6,6 @@ public class Wardrobe : MonoBehaviour, IInteractable
 {
     private bool _hasKey;
     private UIManager uiManager;
-    private GameObject _characterPrefab;
     private Dialogues dialogues = new();
     public GameObject keyObject;
     void Start() {
@@ -18,7 +17,7 @@ public class Wardrobe : MonoBehaviour, IInteractable
         string message = _hasKey ? Dialogues.FindObjectKey : Dialogues.EmptyWardrobeKey;
         uiManager.SetMessage(
             Dialogues.JhonCharacter,
-            dialogues.GetDialogue(Dialogues.JhonCharacter, message));
+            dialogues.GetDialogue(Dialogues.JhonCharacter, message).Split("-"));
         var player = FindObjectOfType<Player>();
         if (_hasKey) {
             player.AddItemToInventory(keyObject);

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Observer : MonoBehaviour {
     public Transform player;
     public GameEnding gameEnding;
-    private bool m_IsPLayerInRange;
+    //private bool m_IsPLayerInRange;
 
     private void OnTriggerEnter(Collider other) {
         if (other.transform == player) {
@@ -12,13 +12,13 @@ public class Observer : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit(Collider other) {
+    /*private void OnTriggerExit(Collider other) {
         if (other.transform == player) {
-            // m_IsPLayerInRange = false;
+            m_IsPLayerInRange = false;
         }
-    }
+    }*/
 
-    private void Update() {
+    /*private void Update() {
         if (m_IsPLayerInRange) {
             Vector3 direction = player.position - transform.position + Vector3.up;
             Ray ray = new Ray(transform.position, direction);
@@ -30,5 +30,5 @@ public class Observer : MonoBehaviour {
                 }
             }
         }
-    }
+    }*/
 }

@@ -50,16 +50,16 @@ public class GameEnding : MonoBehaviour, IInteractable
 
     public void Interact() {
         var playerInventory = player.GetComponent<Player>();
-        string message;
+        string[] message;
         if (playerInventory.HasItems()) {
             if (playerInventory.HasItemInInventory("GoldKey")) {
                 m_IsPlayerAtExit = true;
             } else {
-                message = _dialogues.GetDialogue(null, Dialogues.Key_RedKey);
+                message = _dialogues.GetDialogue(null, Dialogues.Key_RedKey).Split("-");
                 UIManager.Instance.SetMessage(null, message);
             }
         } else {
-            message = _dialogues.GetDialogue(null, Dialogues.Key_NoKey);
+            message = _dialogues.GetDialogue(null, Dialogues.Key_NoKey).Split("-");
             UIManager.Instance.SetMessage(null, message);
         }
     }

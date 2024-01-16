@@ -4,27 +4,21 @@ using UnityTechnologies.Scripts;
 
 public class InteractionDetector : MonoBehaviour
 {
-    private string interactionButtonName = "Interact";
     private List<IInteractable> _interactablesInRange = new();
     private UIManager uiManager;
 
-    private void Start()
-    {
-        uiManager = UIManager.Instance;
-    }
-
     void Update()
     {
-        if (Input.GetButtonDown(interactionButtonName) && _interactablesInRange.Count > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && _interactablesInRange.Count > 0)
         {
             var interactable = _interactablesInRange[0];
             interactable.Interact();
-            uiManager.HideButtonInteractionInCanvas();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        uiManager = UIManager.Instance;
         var interactable = other.GetComponent<IInteractable>();
         if (interactable != null) {
             uiManager.ShowButtonInteractionInCanvas();

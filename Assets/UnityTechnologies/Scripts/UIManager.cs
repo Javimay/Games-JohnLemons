@@ -12,9 +12,10 @@ public class UIManager : MonoBehaviour
     public GameObject buttonLayer;
     private float textSpeed = 0.05f;
     public GameObject dialoguePanel;
-    private bool _messageEnds;
-    private readonly string interactionButtonName = "Interact";
-    
+    private int index;
+    private string[] lines;
+    //private readonly string interactionButtonName = "Interact";
+
     [SerializeField]
     private Transform keysParent;
 
@@ -28,45 +29,35 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        HideButtonInteractionInCanvas();
-        HideDialoguePanel();
-    }
-
     private void Update() {
-        if (Input.GetButtonDown(interactionButtonName) && _messageEnds) {
-            HideDialoguePanel();
-            CleanTextBox();
+        if (Input.GetKeyDown(KeyCode.Space) && dialoguePanel.activeSelf) {
+            if (dialogueTextBox.text == lines[index]) {
+                NextLine();
+            } else if (dialogueTextBox.text.Length > 5) {
+                dialogueTextBox.text = lines[index];
+                StopAllCoroutines();
+            }
         }
     }
 
     private void CleanTextBox() {
         StopAllCoroutines();
+        index = 0;
         dialogueTextBox.text = String.Empty;
-        _messageEnds = false;
     }
 
     public void AddKeyItem(GameObject keyPrefab) {
         Instantiate(keyPrefab, keysParent);
     }
 
-    public void SetMessage([CanBeNull] string character, string message) {
-        if (!dialoguePanel.activeSelf) {
-            ShowDialoguePanel();
-            SetUpCharacterTextBox(character);
-            
-            StartCoroutine(WriteLine(message));
-        }
-    }
-    
+        
     public void SetMessage([CanBeNull] string character, string[] messages) {
-        if (!dialoguePanel.activeSelf) {
+        lines = messages;
+        ShowButtonInteractionInCanvas();
+        if (!dialoguePanel.activeInHierarchy) {
             ShowDialoguePanel();
             SetUpCharacterTextBox(character);
-            foreach (var message in messages) {
-                StartCoroutine(WriteLine(message));               
-            }
+            StartCoroutine(WriteLine(messages));
         }
     }
 
@@ -80,13 +71,26 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    IEnumerator WriteLine(string message) {
-        foreach (char letter in message) {
+    IEnumerator WriteLine(string[] messages) {
+        foreach (char letter in messages[index].ToCharArray()) {
             dialogueTextBox.text += letter;
-            _messageEnds = dialogueTextBox.text.Length.Equals(message.Length);
             yield return new WaitForSeconds(textSpeed);
         }
+        //yield return new WaitForSeconds(1f);
     }
+
+    public void NextLine() {
+        if (index < lines.Length - 1) {
+            index++;
+            dialogueTextBox.text = String.Empty;
+            StartCoroutine(WriteLine(lines));
+        } else {
+            HideDialoguePanel();
+            if (!characterTextBox.IsActive()) {
+                HideButtonInteractionInCanvas();
+            }
+        }
+    } 
 
     public void HideButtonInteractionInCanvas() {
         buttonLayer.SetActive(false);

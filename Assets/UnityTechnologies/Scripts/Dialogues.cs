@@ -16,7 +16,7 @@ namespace UnityTechnologies.Scripts
         private const String hasNoKeys = "La puerta está bloqueada... \nNecesito conseguir una llave para abrirla...";
         private const String GameInstructions = "Jhon Lemon quiere escapar de esta Mansión Embrujada..." +
                                                 "-Ayudalo a encontrar pistas para poder salir..." +
-                                                "-Nota: No todos los fantasmas son amigables.";
+                                                "-Ten cuidado con los fantasmas. No todos son amigables.";
 
         //Characters
         public const String JhonCharacter = "Jhon";
