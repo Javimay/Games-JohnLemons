@@ -12,11 +12,16 @@ public class GameEnding : MonoBehaviour, IInteractable
     public CanvasGroup caughtBackgroundImageCanvasGroup;
     public AudioSource caughtAudio;
     private Dialogues _dialogues = new();
+    private UIManager uiManager;
     
     bool m_IsPlayerAtExit;
     bool m_IsPlayerCaught;
     float m_Timer;
     bool m_HasAudioPlayed;
+
+    private void Start() {
+        uiManager = UIManager.Instance;
+    }
 
     public void CaughtPlayer() {
         m_IsPlayerCaught = true;
@@ -37,6 +42,8 @@ public class GameEnding : MonoBehaviour, IInteractable
         }
         
         m_Timer += Time.deltaTime;
+        uiManager.HideItemLayour();
+        uiManager.HideButtonInteractionInCanvas();
         imageCanvasGroup.alpha = m_Timer / fadeDuration;
         
         if (m_Timer > fadeDuration + displayImageDuration) {

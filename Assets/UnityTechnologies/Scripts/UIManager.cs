@@ -96,6 +96,10 @@ public class UIManager : MonoBehaviour
         buttonLayer.SetActive(false);
     }
 
+    public void HideItemLayour() {
+        keysParent.gameObject.SetActive(false);
+    }
+
     public void ShowButtonInteractionInCanvas() {
         buttonLayer.SetActive(true);
     }
