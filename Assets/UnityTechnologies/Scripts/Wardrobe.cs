@@ -8,6 +8,9 @@ public class Wardrobe : MonoBehaviour, IInteractable
     private UIManager uiManager;
     private Dialogues dialogues = new();
     public GameObject keyObject;
+    public AudioSource addItem;
+    bool m_HasAudioPlayed;
+
     void Start() {
         _hasKey = !keyObject.IsUnityNull();
         uiManager = UIManager.Instance;
@@ -20,6 +23,10 @@ public class Wardrobe : MonoBehaviour, IInteractable
             dialogues.GetDialogue(Dialogues.JhonCharacter, message).Split("-"));
         var player = FindObjectOfType<Player>();
         if (_hasKey) {
+            if (!m_HasAudioPlayed) {
+                addItem.Play();
+                m_HasAudioPlayed = true;
+            }
             player.AddItemToInventory(keyObject);
             keyObject = null;
             _hasKey = false;

@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject dialoguePanel;
     private int index;
     private string[] lines;
+    public bool showingMessage;
     //private readonly string interactionButtonName = "Interact";
 
     [SerializeField]
@@ -30,6 +31,7 @@ public class UIManager : MonoBehaviour
     }
 
     private void Update() {
+        showingMessage = dialoguePanel.activeSelf;
         if (Input.GetKeyDown(KeyCode.Space) && dialoguePanel.activeSelf) {
             if (dialogueTextBox.text == lines[index]) {
                 NextLine();
@@ -86,6 +88,7 @@ public class UIManager : MonoBehaviour
             StartCoroutine(WriteLine(lines));
         } else {
             HideDialoguePanel();
+            CleanTextBox();
             if (!characterTextBox.IsActive()) {
                 HideButtonInteractionInCanvas();
             }
@@ -96,7 +99,7 @@ public class UIManager : MonoBehaviour
         buttonLayer.SetActive(false);
     }
 
-    public void HideItemLayour() {
+    public void HideItemLayout() {
         keysParent.gameObject.SetActive(false);
     }
 

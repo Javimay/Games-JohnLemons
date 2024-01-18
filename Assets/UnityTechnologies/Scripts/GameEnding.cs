@@ -42,8 +42,7 @@ public class GameEnding : MonoBehaviour, IInteractable
         }
         
         m_Timer += Time.deltaTime;
-        uiManager.HideItemLayour();
-        uiManager.HideButtonInteractionInCanvas();
+        HideUiComponents();
         imageCanvasGroup.alpha = m_Timer / fadeDuration;
         
         if (m_Timer > fadeDuration + displayImageDuration) {
@@ -62,12 +61,20 @@ public class GameEnding : MonoBehaviour, IInteractable
             if (playerInventory.HasItemInInventory("GoldKey")) {
                 m_IsPlayerAtExit = true;
             } else {
-                message = _dialogues.GetDialogue(null, Dialogues.Key_RedKey).Split("-");
-                UIManager.Instance.SetMessage(null, message);
+                var johnCharacter = Dialogues.JhonCharacter;
+                message = _dialogues.GetDialogue(johnCharacter, Dialogues.Key_RedKey).Split("-");
+                UIManager.Instance.SetMessage(johnCharacter, message);
             }
         } else {
-            message = _dialogues.GetDialogue(null, Dialogues.Key_NoKey).Split("-");
-            UIManager.Instance.SetMessage(null, message);
+            var johnCharacter = Dialogues.JhonCharacter;
+            message = _dialogues.GetDialogue(johnCharacter, Dialogues.Key_NoKey).Split("-");
+            UIManager.Instance.SetMessage(johnCharacter, message);
         }
+    }
+
+    private void HideUiComponents() {
+        uiManager.HideItemLayout();
+        uiManager.HideButtonInteractionInCanvas();
+        uiManager.HideDialoguePanel();
     }
 }

@@ -11,7 +11,7 @@ public class GhostInBath : MonoBehaviour, IInteractable {
 
     public void Interact() {
         string ghostCharacter = Dialogues.GhostCharacter;
-        string[] message = dialogues.GetDialogues(ghostCharacter);
+        string[] message = dialogues.GetDialogue(ghostCharacter, Dialogues.KeyClueKey).Split("-");
         uiManager.SetMessage(ghostCharacter, message);
     }
 }
